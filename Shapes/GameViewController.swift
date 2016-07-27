@@ -11,9 +11,17 @@ import SpriteKit
 
 class GameViewController: UIViewController {
 
+    var orientacao = UIInterfaceOrientation.Unknown
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if UIDevice.currentDevice().orientation.isLandscape.boolValue {
+            orientacao = UIInterfaceOrientation.LandscapeRight
+        } else {
+            orientacao = UIInterfaceOrientation.Portrait
+        }
+        
         if let scene = GameScene(fileNamed:"GameScene") {
             // Configure the view.
             let skView = self.view as! SKView
@@ -49,5 +57,14 @@ class GameViewController: UIViewController {
 
     override func prefersStatusBarHidden() -> Bool {
         return true
+    }
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        if UIDevice.currentDevice().orientation.isLandscape.boolValue {
+            print("landscape")
+            orientacao = UIInterfaceOrientation.LandscapeRight
+        } else {
+            print("portrait")
+            orientacao = UIInterfaceOrientation.Portrait
+        }
     }
 }
